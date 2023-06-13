@@ -374,3 +374,40 @@ jobs:
       with:
         name: w64-mingw
         path: radare2*.zip
+  build-haiku:
+    timeout-minutes: 30
+    runs-on: ${{ matrix.config.runner }}
+    name: build-${{ matrix.config.os }}-${{ matrix.config.version }}-${{ matrix.config.architecture }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          # The OS versions supported are specific to the version of the action
+          # https://github.com/cross-platform-actions/action/blob/master/changelog.md
+          - { os: haiku, version: 'r1beta4', runner: 'ubuntu-latest', architecture: 'x86-64', secondaryArchSuffix: '' }
+          - { os: haiku, version: 'r1beta4',  runner: 'ubuntu-latest', architecture: 'x86', secondaryArchSuffix: '_x86' }
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Compiling
+        uses: korli/action@v0.14.0-haiku1
+        env:
+          secondaryArchSuffix: ${{ matrix.config.secondaryArchSuffix }}
+        with:
+          environment_variables: secondaryArchSuffix
+          operating_system: ${{ matrix.config.os }}
+          version: ${{ matrix.config.version }}
+          architecture: ${{ matrix.config.architecture }}
+          run: |
+            pkgman install -y devel:libcapstone$secondaryArchSuffix \
+              devel:libcrypto$secondaryArchSuffix devel:libexecinfo$secondaryArchSuffix \
+              devel:libgmp$secondaryArchSuffix devel:liblua$secondaryArchSuffix \
+              devel:libmagic$secondaryArchSuffix devel:libssl$secondaryArchSuffix \
+              devel:libxxhash$secondaryArchSuffix devel:libz$secondaryArchSuffix
+            if [[ `uname -m` == BePC ]]; then
+              setarch x86 bash -c "./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl; make"
+            else
+              ./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl; make
+            fi
