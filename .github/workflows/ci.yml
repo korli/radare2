@@ -410,5 +410,6 @@ jobs:
             if [[ `uname -m` == BePC ]]; then
               setarch x86 bash -c "./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl; make"
             else
-              ./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl; make
+              ./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl
+              make
             fi
