@@ -399,12 +399,7 @@ jobs:
           version: ${{ matrix.config.version }}
           architecture: ${{ matrix.config.architecture }}
           run: |
-            export secondaryArchSuffix="${{ matrix.config.secondaryArchSuffix }}"
-            ssh -o StrictHostKeyChecking=no user@localhost pkgman install -y devel:libcapstone$secondaryArchSuffix \
-              devel:libcrypto$secondaryArchSuffix devel:libexecinfo$secondaryArchSuffix \
-              devel:libgmp$secondaryArchSuffix devel:liblua$secondaryArchSuffix \
-              devel:libmagic$secondaryArchSuffix devel:libssl$secondaryArchSuffix \
-              devel:libxxhash$secondaryArchSuffix devel:libz$secondaryArchSuffix
+            export secondaryArchSuffix=${{ matrix.config.secondaryArchSuffix }}
             echo ./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl
             ./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl
             echo make
