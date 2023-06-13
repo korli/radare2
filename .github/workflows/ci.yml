@@ -405,5 +405,7 @@ jobs:
               devel:libgmp$secondaryArchSuffix devel:liblua$secondaryArchSuffix \
               devel:libmagic$secondaryArchSuffix devel:libssl$secondaryArchSuffix \
               devel:libxxhash$secondaryArchSuffix devel:libz$secondaryArchSuffix
+            echo ./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl
             ./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl
+            echo make
             make
