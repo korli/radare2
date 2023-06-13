@@ -405,8 +405,8 @@ jobs:
               devel:liblua$secondaryArchSuffix devel:libmagic$secondaryArchSuffix devel:libssl$secondaryArchSuffix \
               devel:libxxhash$secondaryArchSuffix devel:libz$secondaryArchSuffix
             if [[ `uname -m` == BePC ]]; then
-              setarch x86 bash -c "./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl; make"
+              setarch x86 bash -c "./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl; make -j2"
             else
               ./configure --with-sysmagic --with-syscapstone --with-sysxxhash --with-openssl
-              make
+              make -j2
             fi
