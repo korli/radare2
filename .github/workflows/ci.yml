@@ -402,7 +402,7 @@ jobs:
           version: ${{ matrix.config.version }}
           architecture: ${{ matrix.config.architecture }}
           run: |
-            pkgman install -y devel:libcapstone$secondaryArchSuffix \
+            ssh -o StrictHostKeyChecking=no user@localhost pkgman install -y devel:libcapstone$secondaryArchSuffix \
               devel:libcrypto$secondaryArchSuffix devel:libexecinfo$secondaryArchSuffix \
               devel:libgmp$secondaryArchSuffix devel:liblua$secondaryArchSuffix \
               devel:libmagic$secondaryArchSuffix devel:libssl$secondaryArchSuffix \
