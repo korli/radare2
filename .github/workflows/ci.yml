@@ -394,14 +394,12 @@ jobs:
 
       - name: Compiling
         uses: korli/action@v0.14.0-haiku1
-        env:
-          secondaryArchSuffix: ${{ matrix.config.secondaryArchSuffix }}
         with:
-          environment_variables: secondaryArchSuffix
           operating_system: ${{ matrix.config.os }}
           version: ${{ matrix.config.version }}
           architecture: ${{ matrix.config.architecture }}
           run: |
+            export secondaryArchSuffix="${{ matrix.config.secondaryArchSuffix }}"
             ssh -o StrictHostKeyChecking=no user@localhost pkgman install -y devel:libcapstone$secondaryArchSuffix \
               devel:libcrypto$secondaryArchSuffix devel:libexecinfo$secondaryArchSuffix \
               devel:libgmp$secondaryArchSuffix devel:liblua$secondaryArchSuffix \
