@@ -374,6 +374,7 @@ jobs:
       with:
         name: w64-mingw
         path: radare2*.zip
+
   build-haiku:
     timeout-minutes: 30
     runs-on: ${{ matrix.config.runner }}
